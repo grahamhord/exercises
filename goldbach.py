@@ -21,18 +21,15 @@ def primes(ubound):
         Checks all integers 1-i exclusive to see if there are any other
         factors for i. If none are found, i is prime.
         """
-        output = True
         for x in range(2,i):
             if i % x == 0:
-                output = False
-                break
-        return output
-    
-    primes = [2]
-    [primes.append(i) for i in range(3, ubound+1, 2) if check(i)]
-    return primes
+                return False
+        return True
 
-#Check all even numbers 4-ubound to see if two primes add to number
+    output = [2]
+    [output.append(i) for i in range(3, ubound+1, 2) if check(i)]
+    return output
+
 def goldbach(ubound,lbound = 4,gb1 = True):
     """
     Check all even integers between 4 and ubound (inclusive) to verify
@@ -51,8 +48,6 @@ def goldbach(ubound,lbound = 4,gb1 = True):
         raise ValueError('Goldbach: ubound and lbound must be integers')
     if lbound>=ubound:
         raise ValueError('Goldbach: ubound must be greater than lbound')
-    lbound = max(lbound,(6 - (2*gb1)))
-    ubound = max(ubound,(7 - (2*gb1)))
     def solvegb(i):
         """
         Checks possible pairs/trios to find an equation that satisfies
@@ -86,10 +81,10 @@ def goldbach(ubound,lbound = 4,gb1 = True):
             raise ValueError(f'FAILURE: NO EQUATION FOUND FOR {i}')
         return output
     
+    lbound = max(lbound,(6 - (2*gb1)))
+    ubound = max(ubound,(7 - (2*gb1)))
     prime = primes(ubound)
-    equations = list()
-    [equations.append(solvegb(i)) for i in range(lbound, ubound + 1, 1 + gb1)]
-    return(equations)
+    return [solvegb(i) for i in range(lbound, ubound + 1, 1 + gb1)]
 
 gb = goldbach(100)
 #gb = goldbach(100, gb1=False)
