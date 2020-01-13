@@ -29,8 +29,7 @@ def primes(ubound):
         return output
     
     primes = [2]
-    for i in range(3,ubound+1,2):
-        if check(i): primes.append(i)
+    [primes.append(i) for i in range(3, ubound+1, 2) if check(i)]
     return primes
 
 #Check all even numbers 4-ubound to see if two primes add to number
@@ -54,7 +53,7 @@ def goldbach(ubound,lbound = 4,gb1 = True):
         raise ValueError('Goldbach: ubound must be greater than lbound')
     lbound = max(lbound,(6 - (2*gb1)))
     ubound = max(ubound,(7 - (2*gb1)))
-    def solvegb(i, primes):
+    def solvegb(i):
         """
         Checks possible pairs/trios to find an equation that satisfies
         Goldbach's conjecture. Raises a value error if any exceptions to the
@@ -67,7 +66,7 @@ def goldbach(ubound,lbound = 4,gb1 = True):
                 [3,2]
         """
         output = ''
-        subset = [x for x in primes[::-1] if x <= i]
+        subset = [x for x in prime[::-1] if x <= i]
         for n in subset:
             if output: break
             subset2 = [x for x in subset if x <= (i-n)]
@@ -89,8 +88,7 @@ def goldbach(ubound,lbound = 4,gb1 = True):
     
     prime = primes(ubound)
     equations = list()
-    for i in range(lbound, ubound+1, 1 + gb1):
-        equations.append(solvegb(i, prime))
+    [equations.append(solvegb(i)) for i in range(lbound, ubound + 1, 1 + gb1)]
     return(equations)
 
 gb = goldbach(100)
